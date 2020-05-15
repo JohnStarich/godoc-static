@@ -6,8 +6,8 @@ import (
 	"os"
 	"path"
 
-	"github.com/netlify/godoc-static/gen"
-	"github.com/netlify/godoc-static/static"
+	"github.com/johnstarich/godoc-static/gen"
+	"github.com/johnstarich/godoc-static/static"
 )
 
 const out = "dist"

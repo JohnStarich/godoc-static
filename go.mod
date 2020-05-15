@@ -1,4 +1,4 @@
-module github.com/netlify/godoc-static
+module github.com/johnstarich/godoc-static
 
 go 1.13
 

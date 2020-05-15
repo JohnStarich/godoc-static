@@ -14,7 +14,7 @@ import (
 	"os"
 	"unicode"
 
-	"github.com/netlify/godoc-static/static"
+	"github.com/johnstarich/godoc-static/static"
 )
 
 func main() {

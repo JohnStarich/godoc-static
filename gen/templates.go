@@ -4,7 +4,7 @@ import (
 	"log"
 	"text/template"
 
-	mystatic "github.com/netlify/godoc-static/static"
+	mystatic "github.com/johnstarich/godoc-static/static"
 	"golang.org/x/tools/godoc/static"
 )
 
