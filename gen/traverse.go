@@ -21,10 +21,12 @@ func (r *Renderer) GenerateAll(pkgPath, targetDir string) error {
 	}
 
 	info := r.pres.GetPkgPageInfo(path.Join("/src", r.ModPath), r.ModPath, r.pres.GetPageInfoMode(rootReq))
-	for _, dir := range info.Dirs.List {
-		err := r.Generate(dir.Path)
-		if err != nil {
-			return err
+	if info.Dirs != nil {
+		for _, dir := range info.Dirs.List {
+			err := r.Generate(dir.Path)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil
