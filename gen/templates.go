@@ -8,6 +8,24 @@ import (
 	"golang.org/x/tools/godoc/static"
 )
 
+func getFuncs(funcs template.FuncMap, meta map[string]string) template.FuncMap {
+	funcs["meta"] = func(key, defaultValue string) string {
+		value := meta[key]
+		if value != "" {
+			return meta[key]
+		}
+		return defaultValue
+	}
+	funcs["baseURL"] = func() string {
+		baseURL := meta["baseURL"]
+		if baseURL == "/" {
+			return ""
+		}
+		return baseURL
+	}
+	return funcs
+}
+
 func (r *Renderer) readGodocTemplate(name string) *template.Template {
 	file, ok := static.Files[name]
 	if !ok {
@@ -18,7 +36,7 @@ func (r *Renderer) readGodocTemplate(name string) *template.Template {
 }
 
 func (r *Renderer) templateFrom(name, source string) *template.Template {
-	t, err := template.New(name).Funcs(r.pres.FuncMap()).Parse(source)
+	t, err := template.New(name).Funcs(r.funcMap).Parse(source)
 	if err != nil {
 		log.Fatal("readTemplate: ", err)
 	}

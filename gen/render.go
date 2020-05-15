@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path"
+	"text/template"
 
 	"golang.org/x/tools/godoc"
 	"golang.org/x/tools/godoc/static"
@@ -19,11 +20,12 @@ type Renderer struct {
 	ModPath    string
 	TargetPath string
 
-	corpus *godoc.Corpus
-	pres   *godoc.Presentation
+	corpus  *godoc.Corpus
+	pres    *godoc.Presentation
+	funcMap template.FuncMap
 }
 
-func NewRenderer(path, mod, target string) *Renderer {
+func NewRenderer(path, mod, target string, meta map[string]string) *Renderer {
 	fs := vfs.NewNameSpace()
 	fs.Bind("/lib/godoc", mapfs.New(static.Files), "/", vfs.BindReplace)
 
@@ -39,6 +41,7 @@ func NewRenderer(path, mod, target string) *Renderer {
 		TargetPath: target,
 		corpus:     corpus,
 		pres:       pres,
+		funcMap:    getFuncs(pres.FuncMap(), meta),
 	}
 	r.readTemplates()
 	return r
